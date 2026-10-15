@@ -4,3 +4,4 @@ demucs
 ffmpeg-python
 librosa
 soundfile
+imageio_ffmpeg
