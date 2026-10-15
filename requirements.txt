@@ -2,3 +2,5 @@ streamlit
 yt_dlp
 demucs
 ffmpeg-python
+librosa
+soundfile
