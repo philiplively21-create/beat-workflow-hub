@@ -49,17 +49,17 @@ st.title("🎛️ Beat Workflow Hub — VST Edition")
 st.markdown("Zero-distraction studio command center with robust MP3 extraction, tempo/key detection, loop trimming, and AI stem separation.")
 
 st.sidebar.header("Studio Preferences")
-download_mode = st.sidebar.selectbox("Output Format:", ["Audio Only (MP3)", "Direct Media Download"])
+download_mode = st.sidebar.selectbox("Output Format:", ["Audio Only (MP3)", "Direct Media Import"])
 auto_rename = st.sidebar.checkbox("Smart Auto-Rename ([BPM]bpm_[Key])", value=True)
 
-tab_download, tab_stems, tab_trim, tab_history = st.tabs(["📥 Download & Analyze", "🧬 AI Stem Splitter", "✂️ Loop Trimmer", "📜 Session Crate Log"])
+tab_download, tab_stems, tab_trim, tab_history = st.tabs(["📥 Import & Analyze", "🧬 AI Stem Splitter", "✂️ Loop Trimmer", "📜 Session Crate Log"])
 
 with tab_download:
     url = st.text_input("YouTube Beat URL:", placeholder="Paste link here...")
     
     if url:
         if st.button("🚀 Process & Analyze Beat", type="primary"):
-            output_dir = os.path.expanduser("~/Downloads")
+            output_dir = os.path.expanduser("~/Imports")
             downloaded_file = None
             raw_title = "Beat"
             
@@ -93,7 +93,7 @@ with tab_download:
                         else:
                             downloaded_file = filename
                 except Exception as ex:
-                    st.error(f"Download Error: {ex}")
+                    st.error(f"Import Error: {ex}")
 
             if downloaded_file and os.path.exists(downloaded_file):
                 with st.spinner("Analyzing Tempo & Key..."):
@@ -158,7 +158,7 @@ with tab_stems:
     if st.button("🚀 Run AI Stem Separation"):
         if stem_target_file and os.path.exists(stem_target_file):
             with st.spinner("AI is separating stems... (This may take a minute)"):
-                output_dir = os.path.expanduser("~/Downloads/Stems")
+                output_dir = os.path.expanduser("~/Imports/Stems")
                 os.makedirs(output_dir, exist_ok=True)
                 
                 model_flag = "htdemucs" if "4 Stems" in stems_count else "htdemucs_ft"
@@ -167,7 +167,7 @@ with tab_stems:
                 result = subprocess.run(cmd, capture_output=True, text=True)
                 
                 if result.returncode == 0:
-                    st.success(f"Stems successfully extracted to `Downloads/Stems/{model_flag}/`!")
+                    st.success(f"Stems successfully extracted to `Imports/Stems/{model_flag}/`!")
                 else:
                     st.error(f"Stem separation error: {result.stderr}")
         else:
