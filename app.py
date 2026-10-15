@@ -70,7 +70,7 @@ with tab_download:
                 ydl_opts = {
                     'format': 'bestaudio/best',
                     'ffmpeg_location': ffmpeg_path,
-                    'extractor_args': {'youtube': {'player_client': ['ios', 'tv', 'web']}},
+                    'extractor_args': {'youtube': {'player_client': ['android', 'ios']}},
                     'nocheckcertificate': True,
                     'outtmpl': os.path.join(output_dir, '%(title)s.%(ext)s'),
                 }
